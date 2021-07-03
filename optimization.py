@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--swarm-size', help="number of particles in the swarm", required=True)
 parser.add_argument('-m', '--max-iterations', help="maximum number of iterations", required=True)
 
-# Parse swarm size and dimension
+# Parse swarm size and maximum number of iterations
 args = parser.parse_args()
 
 # Set the number of particles in the swarm
