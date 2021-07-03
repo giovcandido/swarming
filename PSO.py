@@ -53,9 +53,6 @@ class PSO:
                 # If necessary, update the best position of the particle
                 self._update_best_position(particle)
 
-                # If necessary, update the best global position
-                self._update_best_global_position(particle)
-        
         # Return the best global position as an approximate solution
         return self._best_global_position
 
@@ -79,6 +76,9 @@ class PSO:
 
         if fit < best_fit:
             particle.best_position = particle.position
+
+            # Update the best global position, if necessary
+            self._update_best_global_position(particle)
 
     def _update_best_global_position(self, particle):
         best_fit = self._function(particle.best_position)
