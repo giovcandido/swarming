@@ -3,7 +3,7 @@
 .vscode/
 .idea/
 
-# Ubuntu's editor temp files
+# Gedit temp files
 **/*.*~
 
 # Logs
