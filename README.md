@@ -10,6 +10,6 @@ The script takes two arguments: (S) number of particles in the swarm and (M) max
 
 Run as follows: python3 optimization.py --swarm-size S --max-iterations M.
 
-If you run the script with the example function, 20 particles and 1000 iterations, the expected output is: x[0] = -1.0000 and x[1] = 8.9443.
+If you run the script with the example function and the restricted search space, considering s=20 particles and m=1000 iterations, the expected output has two possibilities. The first one is: x[0] = -1.0000 and x[1] = 8.9443. And the second one is: x[0] = -1.0000 and x[1] = -8.9443. 
 
 Making it easier for you, run: python3 optimization.py --swarm-size 20 --max-iterations 1000. Check it out!
