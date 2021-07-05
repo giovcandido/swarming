@@ -3,12 +3,15 @@ import numpy as np
 from Particle import Particle
 
 class PSO:
-    def __init__(self, swarm_size, dimension, function):
+    def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
         self._w = 0.7
         self._c1 = 1.7
         self._c2 = 1.7
 
         self._function = function
+
+        self._lower_bounds = lower_bounds
+        self._upper_bounds = upper_bounds
 
         self._initialize_search_space(swarm_size, dimension)
 
@@ -17,7 +20,7 @@ class PSO:
 
         # Initialize the particles in the swarm
         for _ in range(swarm_size):
-            p = Particle(dimension)
+            p = Particle(dimension, self._lower_bounds, self._upper_bounds)
 
             self._particles.append(p)
         
@@ -69,7 +72,12 @@ class PSO:
 
     def _update_position(self, particle):
         particle.position = particle.position + particle.velocity
-    
+
+        self._clip_position(particle)
+
+    def _clip_position(self, particle):
+        particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
+
     def _update_best_position(self, particle):
         fit = self._function(particle.position) 
         best_fit = self._function(particle.best_position)
