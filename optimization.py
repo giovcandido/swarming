@@ -19,19 +19,34 @@ dimension = 2
 # And the function to be optimized
 function = lambda x: x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
-# Create a PSO instance
-pso = PSO(swarm_size, dimension, function)
+# Now, let's set the bounds in order to restric the search space
 
-# Set maximum number of iterations
-max_iterations = int(args.max_iterations)
+# Lower bounds
+lower_bounds = (-100, -100)
 
-# Find an approximate solution with PSO
-approx_sol = pso.optimize(max_iterations)
+# Upper bounds
+upper_bounds = (100, 100)
 
-print('\nThe approximate solution is:')
+# Number of times to run the algorithm
+times_to_run = 15
 
-for i, x in enumerate(approx_sol):
-    x = round(x, 4) + 0
-    print('x[%i] = %.4f' % (i, x))
+# Run the PSO algorithm many times
+# It helps to check if the restricted search space is appropriate
 
-print('')
+for _ in range(times_to_run):
+    # Create a PSO instance
+    pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+
+    # Set maximum number of iterations
+    max_iterations = int(args.max_iterations)
+
+    # Find an approximate solution with PSO
+    approx_sol = pso.optimize(max_iterations)
+
+    print('\nThe approximate solution is:')
+
+    for i, x in enumerate(approx_sol):
+        x = round(x, 4) + 0
+        print('x[%i] = %.4f' % (i, x))
+
+    print('')
