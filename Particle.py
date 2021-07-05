@@ -3,7 +3,7 @@ import numpy as np
 class Particle:
     def __init__(self, dimension, lower_bouds, upper_bounds):
         self._position = np.random.uniform(lower_bouds, upper_bounds, dimension)
-        self._velocity = np.random.rand(dimension)
+        self._velocity = np.zeros(dimension)
 
         self._best_position = self._position
 
