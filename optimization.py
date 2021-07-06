@@ -1,4 +1,5 @@
 import argparse
+import time
 
 from PSO import PSO
 
@@ -45,8 +46,12 @@ for i in range(1, times_to_run + 1):
     # Set maximum number of iterations
     max_iterations = int(args.max_iterations)
 
+    start_time = time.time()
+
     # Find an approximate solution with PSO
     approx_sol = pso.optimize(max_iterations)
+
+    end_time = time.time()
 
     print('Approximate solution:')
 
@@ -54,4 +59,4 @@ for i in range(1, times_to_run + 1):
         x = round(x, 4) + 0
         print('x[%i] = %.4f' % (i, x))
 
-    print('')
+    print('Time spent: %f s\n' % (end_time - start_time))
