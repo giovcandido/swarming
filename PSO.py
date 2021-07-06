@@ -2,6 +2,7 @@ import numpy as np
 
 from Particle import Particle
 
+
 class PSO:
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
         self._w = 0.7
