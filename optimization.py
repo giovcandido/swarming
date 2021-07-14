@@ -48,13 +48,13 @@ if __name__ == '__main__':
         # Defines a random seed to achieve constant results
         np.random.seed(i)
 
-        # Create a PSO instance
-        pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
-
         # Set maximum number of iterations
         max_iterations = int(args.max_iterations)
         
         start_time = time.time()
+
+        # Create a PSO instance
+        pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
 
         # Find an approximate solution with PSO
         approx_sol, fit = pso.optimize(max_iterations)
