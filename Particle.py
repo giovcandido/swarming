@@ -8,6 +8,8 @@ class Particle:
 
         self._best_position = self._position
 
+        self._best_score = None
+
     @property
     def position(self):
         return self._position
@@ -19,6 +21,10 @@ class Particle:
     @property
     def best_position(self):
         return self._best_position
+    
+    @property
+    def best_score(self):
+        return self._best_score
 
     @position.setter
     def position(self, position):
@@ -31,3 +37,7 @@ class Particle:
     @best_position.setter
     def best_position(self, position):
         self._best_position = position
+
+    @best_score.setter
+    def best_score(self, score):
+        self._best_score = score

@@ -2,7 +2,6 @@ import numpy as np
 
 from Particle import Particle
 
-
 class PSO:
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
         self._w = 0.7
@@ -26,14 +25,14 @@ class PSO:
             self._particles.append(p)
         
         self._best_global_position = self._particles[0].best_position
+        self._best_global_score = self._function(self._best_global_position)
 
         # Initialize the best position of the whole swarm
-        for i in range(1, swarm_size):
-            best_fit = self._function(self._particles[i].best_position)
-            best_global_fit = self._function(self._best_global_position)
-
-            if best_fit < best_global_fit:
-                self._best_global_position = self._particles[i].best_position
+        for particle in self._particles:
+            particle.best_score = self._function(particle.best_position)
+ 
+            if particle.best_score < self._best_global_score:
+                self._best_global_position = particle.best_position
 
     @property
     def particles(self):
@@ -80,18 +79,16 @@ class PSO:
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
     def _update_best_position(self, particle):
-        fit = self._function(particle.position) 
-        best_fit = self._function(particle.best_position)
+        score = self._function(particle.position) 
 
-        if fit < best_fit:
+        if score < particle.best_score:
             particle.best_position = particle.position
+            particle.best_score = score
 
             # Update the best global position, if necessary
             self._update_best_global_position(particle)
 
     def _update_best_global_position(self, particle):
-        best_fit = self._function(particle.best_position)
-        best_global_fit = self._function(self._best_global_position)
-
-        if best_fit < best_global_fit:
+        if particle.best_score < self._best_global_score:
             self._best_global_position = particle.best_position
+            self._best_global_score = particle.best_score
