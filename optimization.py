@@ -7,6 +7,8 @@ from PSO import PSO
 
 
 def function(x):
+    time.sleep(1)
+    
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 
