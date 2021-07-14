@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # Number of times to run the algorithm
     times_to_run = int(args.times)
 
-    print('Running algorithm %i times...\n' % times_to_run)
+    print('Running algorithm %i time(s)...\n' % times_to_run)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
@@ -53,11 +53,11 @@ if __name__ == '__main__':
 
         # Set maximum number of iterations
         max_iterations = int(args.max_iterations)
-
+        
         start_time = time.time()
 
         # Find an approximate solution with PSO
-        approx_sol = pso.optimize(max_iterations)
+        approx_sol, fit = pso.optimize(max_iterations)
 
         end_time = time.time()
 
@@ -67,5 +67,5 @@ if __name__ == '__main__':
             x = round(x, 4) + 0
             print('x[%i] = %.4f' % (i, x))
 
-        print('fit = %.4f' % function(approx_sol))
+        print('fit = %.4f' % fit)
         print('Time spent: %f s\n' % (end_time - start_time))

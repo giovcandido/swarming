@@ -30,7 +30,7 @@ class PSO:
         # Initialize the best position of the whole swarm
         for particle in self._particles:
             particle.best_score = self._function(particle.best_position)
- 
+            
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position
 
@@ -57,7 +57,7 @@ class PSO:
                 self._update_best_position(particle)
 
         # Return the best global position as an approximate solution
-        return self._best_global_position
+        return self._best_global_position, self._best_global_score
 
     def _update_velocity(self, particle):
         inertia = self._w * particle.velocity
@@ -79,7 +79,7 @@ class PSO:
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
     def _update_best_position(self, particle):
-        score = self._function(particle.position) 
+        score = self._function(particle.position)
 
         if score < particle.best_score:
             particle.best_position = particle.position
