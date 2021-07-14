@@ -25,11 +25,13 @@ class PSO:
             self._particles.append(p)
         
         self._best_global_position = self._particles[0].best_position
-        self._best_global_score = self._function(self._best_global_position)
 
         # Initialize the best position of the whole swarm
-        for particle in self._particles:
+        for i, particle in enumerate(self._particles):
             particle.best_score = self._function(particle.best_position)
+
+            if i == 0:
+                self._best_global_score = particle.best_score
             
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position
