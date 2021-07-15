@@ -35,6 +35,7 @@ class PSO:
             
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position
+                self._best_global_score = particle.best_score
 
     @property
     def particles(self):
