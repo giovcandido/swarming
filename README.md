@@ -18,7 +18,7 @@ If you run the script with the example function and the restricted search space,
 Making it easier for you, run:
 * python3 optimization.py --parallel n --swarm-size 20 --max-iterations 1000 --times 1. 
  
-See it for yoursel.
+See it for yourself.
 
 Bear in mind that distributed computing works better for long calculations.
 
