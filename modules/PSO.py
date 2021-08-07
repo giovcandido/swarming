@@ -2,7 +2,7 @@ import numpy as np
 
 from tqdm import tqdm
 
-from Particle import Particle
+from modules.Particle import Particle
 
 class PSO:
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
