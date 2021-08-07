@@ -1,5 +1,5 @@
 # pso-optimization
-Particle Swarm Optimization algorithm implemented with Python
+Particle Swarm Optimization algorithm with serial and distributed execution. Made with Python3. 
 
 ## How to use
 In the optimization.py, change the function to be optimized to any function you wish.
