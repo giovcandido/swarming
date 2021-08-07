@@ -15,7 +15,10 @@ You can run as follows: python3 optimization.py --parallel P --swarm-size S --ma
 
 If you run the script with the example function and the restricted search space, considering s=20 particles and m=1000 iterations, the expected output has two possibilities. The first one is: x[0] = -1.0000 and x[1] = 8.9443. And the second one is: x[0] = -1.0000 and x[1] = -8.9443. 
 
-Making it easier for you, run: python3 optimization.py --parallel n --swarm-size 20 --max-iterations 1000 --times 1. See it for yoursel.
+Making it easier for you, run:
+* python3 optimization.py --parallel n --swarm-size 20 --max-iterations 1000 --times 1. 
+ 
+See it for yoursel.
 
 Bear in mind that distributed computing works better for long calculations.
 
