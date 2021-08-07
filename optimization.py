@@ -4,6 +4,7 @@ import time
 import numpy as np
 
 from modules.PSO import PSO
+from modules.ParallelPSO import ParallelPSO
 
 
 def function(x):    
@@ -11,6 +12,7 @@ def function(x):
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-p', '--parallel', help="number of particles in the swarm", required=True)
 parser.add_argument('-s', '--swarm-size', help="number of particles in the swarm", required=True)
 parser.add_argument('-m', '--max-iterations', help="maximum number of iterations", required=True)
 parser.add_argument('-t', '--times', help="number of times to run", required=True)
@@ -47,8 +49,11 @@ if __name__ == '__main__':
         np.random.seed(i)
 
         # Create a PSO instance
-        pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
-
+        if args.parallel == 'n': 
+            pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+        else:
+            pso = ParallelPSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+			
         # Set maximum number of iterations
         max_iterations = int(args.max_iterations)
         
