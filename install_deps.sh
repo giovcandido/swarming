@@ -1,3 +1,3 @@
-sudo pip3 install ray[default]
-sudo pip3 install numpy
-sudo pip3 install tqdm
+pip3 install ray[default]
+pip3 install numpy
+pip3 install tqdm
