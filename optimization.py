@@ -6,12 +6,10 @@ from modules.cli import parse_arguments
 from modules.PSO import PSO
 from modules.ParallelPSO import ParallelPSO
 
-
 def function(x):    
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
-
-if __name__ == '__main__':
+def main():
     # Parse swarm size and maximum number of iterations
     args = parse_arguments()
     # Set the number of particles in the swarm
@@ -64,3 +62,6 @@ if __name__ == '__main__':
 
         print('Fit = %.4f' % fit)
         print('Time spent: %f s\n' % (end_time - start_time))
+
+if __name__ == '__main__':
+    main()
