@@ -1,7 +1,7 @@
-import argparse
 import time
-
 import numpy as np
+
+from modules.cli import parse_arguments
 
 from modules.PSO import PSO
 from modules.ParallelPSO import ParallelPSO
@@ -11,17 +11,9 @@ def function(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-p', '--parallel', help="parallel execution or not", required=True)
-parser.add_argument('-s', '--swarm-size', help="number of particles in the swarm", required=True)
-parser.add_argument('-m', '--max-iterations', help="maximum number of iterations", required=True)
-parser.add_argument('-t', '--times', help="number of times to run", required=True)
-
-
 if __name__ == '__main__':
     # Parse swarm size and maximum number of iterations
-    args = parser.parse_args()
-
+    args = parse_arguments()
     # Set the number of particles in the swarm
     swarm_size = int(args.swarm_size)
 
