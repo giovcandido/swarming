@@ -40,6 +40,8 @@ python3 optimization.py -p P -s S -m M -t T
 
 Note that you should __replace__ the uppercase letters with the values you wish.
 
+Moreover, it's also important to note that 'parallel' and 'times' are optional arguments. If you don't include them when executing the script, the default values are considered. For parallel, the default is 'n', which means 'no'. As for times, the default is one time.
+
 Now that you have all the requirements installed and know how to execute the script, open the optimization.py file. In this file, you can change the function to be optimized. However, after changing the function, you should also update the dimension variable and the lower and upper bounds to each of these variables.
 
 Before making your changes to the script, you may want to test it using the predefined values. In this case, check the example section below.
