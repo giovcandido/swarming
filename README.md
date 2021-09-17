@@ -22,7 +22,7 @@ sudo sh install_deps.sh
 
 ## Usage
 
-The optimization script takes four arguments: 
+An optimization script takes four arguments: 
 - (P) if the algorithm should run in parallel;
 - (S) the number of particles in the swarm;
 - (M) the maximum number of iterations;
@@ -30,32 +30,35 @@ The optimization script takes four arguments:
 
 You can run it as follows:
 ```bash
-python3 optimization.py --parallel P --swarm-size S --max-iterations M --times T
+python3 script.py --parallel P --swarm-size S --max-iterations M --times T
 ``` 
 
 You can also run: 
 ```bash
-python3 optimization.py -p P -s S -m M -t T
+python3 script.py -p P -s S -m M -t T
 ``` 
 
-Note that you should __replace__ the uppercase letters with the values you wish.
+Note that you should __replace__ script.py with the desired script and the uppercase letters with the values you wish.
 
-Moreover, it's also important to note that 'parallel' and 'times' are optional arguments. If you don't include them when executing the script, the default values are considered. For parallel, the default is 'n', which means 'no'. As for times, the default is one time.
+Moreover, it's also important to note that 'parallel' and 'times' are optional arguments. If you don't include them when executing a script, the default values are considered. For parallel, the default is 'n', which means 'no'. As for times, the default is one time.
 
-Now that you have all the requirements installed and know how to execute the script, open the optimization.py file. In this file, you can change the function to be optimized. However, after changing the function, you should also update the dimension variable and the lower and upper bounds to each of these variables.
+Now that you have all the requirements installed and know how to execute a script, open the script you want to work with. In the file, you can change the function to be optimized. However, after changing the function, you should also update the function dimension and the lower and upper bounds to each of the function variables.
 
-Before making your changes to the script, you may want to test it using the predefined values. In this case, check the example section below.
+Before making your changes, you may want to test the using the predefined values. In this case, check the example section below.
 
 ## Example
 
+There is currently one optimization script:
+- math_function.py
+
 In order to test it for the first time, keep the script unchanged and run:
 ```bash
-python3 optimization.py --parallel n --swarm-size 20 --max-iterations 1000 --times 1
+python3 math_function.py --parallel n --swarm-size 20 --max-iterations 1000 --times 1
 ```
 
 If you want to test the distributed execution, change the first argument to 'y':
 ```bash
-python3 optimization.py --parallel y --swarm-size 20 --max-iterations 1000 --times 1
+python3 math_function.py --parallel y --swarm-size 20 --max-iterations 1000 --times 1
 ```
 
 Running any of the above commands with the optimization script unchanged, you should expect one of two possible outputs.
