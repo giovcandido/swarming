@@ -1,32 +1,43 @@
-import time
 import numpy as np
+
+from time import time
 
 from modules.cli import parse_arguments
 
 from modules.PSO import PSO
 from modules.ParallelPSO import ParallelPSO
 
+# ---------------------------------------------------------------------------- #
+#                            Problem definition part                           #
+# ---------------------------------------------------------------------------- #
+
+# Function to be optimized
 def function(x):    
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
+
+# Function dimension
+dimension = 2
+
+# Now, let's set the bounds in order to restric the search space
+# Lower bounds
+lower_bounds = np.full(dimension, -100)
+
+# Upper bounds
+upper_bounds = np.full(dimension, 100)
+
+# ---------------------------------------------------------------------------- #
+#                 Main function, where the optimization occurs                 #
+# ---------------------------------------------------------------------------- #
 
 def main():
     # Parse swarm size and maximum number of iterations
     args = parse_arguments()
+    
     # Set the number of particles in the swarm
-    swarm_size = int(args.swarm_size)
-
-    # Set the dimension of the problem
-    dimension = 2
-
-    # Now, let's set the bounds in order to restric the search space
-    # Lower bounds
-    lower_bounds = np.full(dimension, -100)
-
-    # Upper bounds
-    upper_bounds = np.full(dimension, 100)
+    swarm_size = args.swarm_size
 
     # Number of times to run the algorithm
-    times_to_run = int(args.times)
+    times_to_run = args.times
 
     print('Running algorithm %i time(s)...\n' % times_to_run)
 
@@ -45,14 +56,14 @@ def main():
             pso = ParallelPSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
 			
         # Set maximum number of iterations
-        max_iterations = int(args.max_iterations)
+        max_iterations = args.iterations
         
-        start_time = time.time()
+        start_time = time()
 
         # Find an approximate solution with PSO
-        approx_sol, fit = pso.optimize(max_iterations)
+        approx_sol, fit = pso.optimize(args.iterations)
 
-        end_time = time.time()
+        end_time = time()
 
         print('Approximate solution:')
 
@@ -62,6 +73,10 @@ def main():
 
         print('Fit = %.4f' % fit)
         print('Time spent: %f s\n' % (end_time - start_time))
+
+# ---------------------------------------------------------------------------- #
+#                           Entry point of the script                          #
+# ---------------------------------------------------------------------------- #
 
 if __name__ == '__main__':
     main()
