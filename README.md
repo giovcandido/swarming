@@ -48,8 +48,11 @@ Before making your changes, you may want to test the using the predefined values
 
 ## Example
 
-There is currently one optimization script:
-- math_function.py
+There are currently two predefined optimization scripts:
+- math_function.py;
+- neural_net.py.
+
+Let's pick the first one to use as an example.
 
 In order to test it for the first time, keep the script unchanged and run:
 ```bash
