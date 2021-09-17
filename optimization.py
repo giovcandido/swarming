@@ -30,20 +30,14 @@ upper_bounds = np.full(dimension, 100)
 # ---------------------------------------------------------------------------- #
 
 def main():
-    # Parse swarm size and maximum number of iterations
+    # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
     
-    # Set the number of particles in the swarm
-    swarm_size = args.swarm_size
-
-    # Number of times to run the algorithm
-    times_to_run = args.times
-
-    print('Running algorithm %i time(s)...\n' % times_to_run)
+    print('Running algorithm %i time(s)...\n' % args.times)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
-    for i in range(1, times_to_run + 1):
+    for i in range(1, args.times + 1):
         print('==> Run number %i' % i)
 
         # Defines a random seed to achieve constant results
@@ -51,12 +45,9 @@ def main():
 
         # Create a PSO instance
         if args.parallel == 'n': 
-            pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+            pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
         else:
-            pso = ParallelPSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
-			
-        # Set maximum number of iterations
-        max_iterations = args.iterations
+            pso = ParallelPSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
         
         start_time = time()
 
