@@ -15,10 +15,6 @@ from modules.ParallelPSO import ParallelPSO
 #                            Problem definition part                           #
 # ---------------------------------------------------------------------------- #
 
-# Function to be optimized
-def function(x):    
-    return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
-
 # Function dimension
 dimension = 2
 
@@ -28,6 +24,10 @@ lower_bounds = np.full(dimension, -100)
 
 # Upper bounds
 upper_bounds = np.full(dimension, 100)
+
+# Function to be optimized
+def function(x):    
+    return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 # ---------------------------------------------------------------------------- #
 #                 Main function, where the optimization occurs                 #
