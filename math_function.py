@@ -8,6 +8,8 @@ from time import time
 
 from modules.cli import parse_arguments
 
+from utils.log_creator import create_logger
+
 from modules.PSO import PSO
 from modules.ParallelPSO import ParallelPSO
 
@@ -37,12 +39,14 @@ def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
     
-    print('Running algorithm %i time(s)...\n' % args.times)
+    logger = create_logger('logs', 'math_function.log')
+
+    logger.info('Running algorithm %i time(s)...\n' % args.times)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
     for i in range(1, args.times + 1):
-        print('==> Run number %i' % i)
+        logger.info('==> Run number %i\n' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)
@@ -60,14 +64,14 @@ def main():
 
         end_time = time()
 
-        print('Approximate solution:')
+        logger.info('Approximate solution:')
 
         for i, x in enumerate(approx_sol):
             x = round(x, 4) + 0
-            print('x[%i] = %.4f' % (i, x))
+            logger.info('x[%i] = %.4f' % (i, x))
 
-        print('Fit = %.4f' % fit)
-        print('Time spent: %f s\n' % (end_time - start_time))
+        logger.info('Fit = %.4f\n' % fit)
+        logger.info('Time spent: %f s\n' % (end_time - start_time))
 
 # ---------------------------------------------------------------------------- #
 #                           Entry point of the script                          #

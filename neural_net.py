@@ -18,6 +18,8 @@ from torch.autograd import Variable
 
 from modules.cli import parse_arguments
 
+from utils.log_creator import create_logger
+
 from modules.PSO import PSO
 from modules.ParallelPSO import ParallelPSO
 
@@ -142,12 +144,12 @@ def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
 
-    print('Running algorithm %i time(s)...\n' % args.times)
+    logger.info('Running algorithm %i time(s)...\n' % args.times)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
     for i in range(1, int(args.times) + 1):
-        print('==> Run number %i' % i)
+        logger.info('==> Run number %i' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)
@@ -165,12 +167,12 @@ def main():
 
         end_time = time()
 
-        print('Approximate solution:')
+        logger.info('Approximate solution:')
 
         for i, x in enumerate(approx_sol):
             x = round(x, 16) + 0
-            print('x[%i] = %.16f' % (i, x))
+            logger.info('x[%i] = %.16f' % (i, x))
 
-        print('Fit = %.16f' % fit)
-        print('Acc = %.16f' % ((1 - fit) * 100))
-        print('Time spent: %f s\n' % (end_time - start_time))
+        logger.info('Fit = %.16f' % fit)
+        logger.info('Acc = %.16f' % ((1 - fit) * 100))
+        logger.info('Time spent: %f s\n' % (end_time - start_time))
