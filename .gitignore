@@ -7,8 +7,7 @@
 **/*.*~
 
 # Logs
-opytimizer.log.*
-opytimark.log.*
+*.log
 
 # Saved pickles
 **/*.pkl
