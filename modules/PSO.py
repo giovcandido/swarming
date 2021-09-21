@@ -40,18 +40,14 @@ class PSO:
             p = Particle(dimension, self._lower_bounds, self._upper_bounds)
 
             self._particles.append(p)
-        
-        have_ran = False
-        
+
         # Initialize the best position of the whole swarm
-        for particle in self._particles:
+        for i, particle in self._particles:
             particle.best_score = self._function(particle.best_position)
 
-            if not have_ran:
+            if i == 0:
                 self._best_global_position = particle.best_position
                 self._best_global_score = particle.best_score
-                
-                have_ran = True
 
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position

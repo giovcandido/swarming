@@ -47,9 +47,7 @@ class ParallelPSO:
             p = Particle(dimension, self._lower_bounds, self._upper_bounds)
             
             self._particles.append(p)
-        
-        self._best_global_position = self._particles[0].best_position
-        
+            
         best_scores = ray.get([self._function.remote(p.best_position) for p in self._particles])
 
         # Initialize the best position of the whole swarm
@@ -57,6 +55,7 @@ class ParallelPSO:
             particle.best_score = best_scores[i]
 
             if i == 0:
+                self._best_global_position = self._particle.best_position
                 self._best_global_score = particle.best_score
             
             if particle.best_score < self._best_global_score:
