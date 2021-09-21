@@ -66,8 +66,11 @@ class PSO:
                 # Move particle considering its new velocity
                 self._update_position(particle)
 
+                # Calculate particle score
+                score = self._function(particle.position)
+
                 # If necessary, update the best position of the particle
-                self._update_best_position(particle)
+                self._update_best_position(particle, score)
 
         # Return the best global position as an approximate solution
         return self._best_global_position, self._best_global_score
@@ -91,9 +94,7 @@ class PSO:
     def _clip_position(self, particle):
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
-    def _update_best_position(self, particle):
-        score = self._function(particle.position)
-
+    def _update_best_position(self, particle, score):
         if score < particle.best_score:
             particle.best_position = particle.position
             particle.best_score = score
