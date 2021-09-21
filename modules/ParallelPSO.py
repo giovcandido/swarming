@@ -27,6 +27,18 @@ class ParallelPSO:
 
         self._initialize_search_space(swarm_size, dimension)
 
+    @property
+    def particles(self):
+        return self._particles
+    
+    @property
+    def best_global_position(self):
+        return self._best_global_position
+    
+    @property
+    def best_global_score(self):
+        return self._best_global_score
+    
     def _initialize_search_space(self, swarm_size, dimension):
         self._particles = []
 
@@ -50,15 +62,7 @@ class ParallelPSO:
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position
                 self._best_global_score = particle.best_score
-
-    @property
-    def particles(self):
-        return self._particles
-    
-    @property
-    def best_global_position(self):
-        return self._best_global_position
-    
+                
     def optimize(self, max_iterations):
         # Move particles up to the maximum number of iterations
         for _ in tqdm(range(max_iterations)):
