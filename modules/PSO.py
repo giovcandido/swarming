@@ -18,8 +18,6 @@ class PSO:
         self._lower_bounds = lower_bounds
         self._upper_bounds = upper_bounds
 
-        self._initialize_search_space(self._swarm_size, self._dimension)
-
     @property
     def particles(self):
         return self._particles
@@ -55,7 +53,11 @@ class PSO:
     
     def optimize(self, max_iterations):
         # Move particles up to the maximum number of iterations
-        for _ in tqdm(range(max_iterations)):
+        for i in tqdm(range(max_iterations)):
+            # If it's the first iteration, initialize the search space
+            if i == 0:
+                self._initialize_search_space(self._swarm_size, self._dimension)
+
             # Loop over all particles in the swarm
             for particle in self._particles:
                 # Update particle current velocity

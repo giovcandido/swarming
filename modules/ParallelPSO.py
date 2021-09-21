@@ -13,19 +13,20 @@ class ParallelPSO:
         self._c1 = 1.7
         self._c2 = 1.7
 
+        self._swarm_size = swarm_size
+        self._dimension = dimension
+
         # Get number of cpus available including logical threads
         num_cpus = psutil.cpu_count(logical=True)
 
         # Initialize ray instance
         ray.init(num_cpus=num_cpus, logging_level=logging.FATAL)
 
-        # Add ray decorator to function
+        # Save function as ray remote
         self._function = ray.remote(function)
 
         self._lower_bounds = lower_bounds
         self._upper_bounds = upper_bounds
-
-        self._initialize_search_space(swarm_size, dimension)
 
     @property
     def particles(self):
@@ -64,7 +65,11 @@ class ParallelPSO:
                 
     def optimize(self, max_iterations):
         # Move particles up to the maximum number of iterations
-        for _ in tqdm(range(max_iterations)):
+        for i in tqdm(range(max_iterations)):
+            # If it's the first iteration, initialize the search space
+            if i == 0:
+                self._initialize_search_space(self._swarm_size, self._dimension)
+
             # Loop over all particles in the swarm
             for particle in self._particles:
                 # Update particle current velocity
@@ -76,9 +81,9 @@ class ParallelPSO:
             scores = ray.get([self._function.remote(p.position) for p in self._particles])
 
             # Loop over all particles in the swarm
-            for i, particle in enumerate(self._particles):
+            for j, particle in enumerate(self._particles):
                 # If necessary, update the best position of the particle
-                self._update_best_position(particle, scores[i])
+                self._update_best_position(particle, scores[j])
 
         # Return the best global position as an approximate solution
         return self._best_global_position, self._best_global_score
