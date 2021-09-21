@@ -56,7 +56,7 @@ class ParallelPSO:
             particle.best_score = best_scores[i]
 
             if i == 0:
-                self._best_global_position = self._particle.best_position
+                self._best_global_position = particle.best_position
                 self._best_global_score = particle.best_score
             
             if particle.best_score < self._best_global_score:
