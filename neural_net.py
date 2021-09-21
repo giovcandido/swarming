@@ -157,7 +157,7 @@ def main():
         np.random.seed(i)
 
         # Creates the space, optimizer and function
-        if args.parallel == 'n': 
+        if not args.parallel: 
             pso = PSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
         else:
             pso = ParallelPSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)

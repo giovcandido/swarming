@@ -52,7 +52,7 @@ def main():
         np.random.seed(i)
 
         # Create a PSO instance
-        if args.parallel == 'n': 
+        if not args.parallel: 
             pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
         else:
             pso = ParallelPSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
