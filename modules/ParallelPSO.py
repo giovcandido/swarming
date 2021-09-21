@@ -39,30 +39,7 @@ class ParallelPSO:
     @property
     def best_global_score(self):
         return self._best_global_score
-    
-    def _initialize_search_space(self, swarm_size, dimension):
-        self._particles = []
 
-        # Initialize the particles in the swarm
-        for _ in range(swarm_size):
-            p = Particle(dimension, self._lower_bounds, self._upper_bounds)
-            
-            self._particles.append(p)
-            
-        best_scores = ray.get([self._function.remote(p.best_position) for p in self._particles])
-
-        # Initialize the best position of the whole swarm
-        for i, particle in enumerate(self._particles):
-            particle.best_score = best_scores[i]
-
-            if i == 0:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
-            
-            if particle.best_score < self._best_global_score:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
-                
     def optimize(self, max_iterations):
         # Move particles up to the maximum number of iterations
         for i in tqdm(range(max_iterations)):
@@ -87,6 +64,29 @@ class ParallelPSO:
 
         # Return the best global position as an approximate solution
         return self._best_global_position, self._best_global_score
+
+    def _initialize_search_space(self, swarm_size, dimension):
+        self._particles = []
+
+        # Initialize the particles in the swarm
+        for _ in range(swarm_size):
+            p = Particle(dimension, self._lower_bounds, self._upper_bounds)
+            
+            self._particles.append(p)
+            
+        best_scores = ray.get([self._function.remote(p.best_position) for p in self._particles])
+
+        # Initialize the best position of the whole swarm
+        for i, particle in enumerate(self._particles):
+            particle.best_score = best_scores[i]
+
+            if i == 0:
+                self._best_global_position = particle.best_position
+                self._best_global_score = particle.best_score
+            
+            if particle.best_score < self._best_global_score:
+                self._best_global_position = particle.best_position
+                self._best_global_score = particle.best_score
 
     def _update_velocity(self, particle):
         inertia = self._w * particle.velocity
