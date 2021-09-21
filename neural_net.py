@@ -146,12 +146,12 @@ def main():
 
     logger = create_logger('logs', 'neural_net.log')
 
-    logger.info('Running algorithm %i time(s)...\n' % args.times)
+    logger.info('Executing algorithm %i time(s)...\n' % args.executions)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
-    for i in range(1, int(args.times) + 1):
-        logger.info('==> Run number %i' % i)
+    for i in range(1, int(args.executions) + 1):
+        logger.info('==> Execution number %i\n' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)

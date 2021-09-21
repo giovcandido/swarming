@@ -9,7 +9,7 @@ def parse_arguments():
                         help='number of particles in the swarm', required=True)
     parser.add_argument('-i', '--iterations', metavar='I', type=int, 
                         help='number of iterations', required=True)
-    parser.add_argument('-t', '--times', metavar='T', type=int, 
-                        default=1, help='number of times to run')
+    parser.add_argument('-e', '--executions', metavar='E', type=int, 
+                        default=1, help='number of executions')
 
     return parser.parse_args()

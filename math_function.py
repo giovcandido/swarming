@@ -41,12 +41,12 @@ def main():
     
     logger = create_logger('logs', 'math_function.log')
 
-    logger.info('Running algorithm %i time(s)...\n' % args.times)
+    logger.info('Executing algorithm %i time(s)...\n' % args.executions)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
-    for i in range(1, args.times + 1):
-        logger.info('==> Run number %i\n' % i)
+    for i in range(1, args.executions + 1):
+        logger.info('==> Execution number %i\n' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)
