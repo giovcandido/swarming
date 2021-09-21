@@ -144,6 +144,8 @@ def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
 
+    logger = create_logger('logs', 'neural_net.log')
+
     logger.info('Running algorithm %i time(s)...\n' % args.times)
 
     # Run the PSO algorithm many times
@@ -174,5 +176,8 @@ def main():
             logger.info('x[%i] = %.16f' % (i, x))
 
         logger.info('Fit = %.16f' % fit)
-        logger.info('Acc = %.16f' % ((1 - fit) * 100))
+        logger.info('Acc = %.16f\n' % ((1 - fit) * 100))
         logger.info('Time spent: %f s\n' % (end_time - start_time))
+
+if __name__ == '__main__':
+    main()
