@@ -35,7 +35,7 @@ class PSO:
         for i in tqdm(range(iterations)):
             # If it's the first iteration, initialize the search space
             if i == 0:
-                self._initialize_search_space(self._swarm_size, self._dimension)
+                self._initialize_search_space()
 
             # Loop over all particles in the swarm
             for particle in self._particles:
@@ -54,12 +54,12 @@ class PSO:
         # Return the best global position as an approximate solution
         return self._best_global_position, self._best_global_score
 
-    def _initialize_search_space(self, swarm_size, dimension):
+    def _initialize_search_space(self):
         self._particles = []
 
         # Initialize the particles in the swarm
-        for _ in range(swarm_size):
-            p = Particle(dimension, self._lower_bounds, self._upper_bounds)
+        for _ in range(self._swarm_size):
+            p = Particle(self._dimension, self._lower_bounds, self._upper_bounds)
 
             self._particles.append(p)
 
