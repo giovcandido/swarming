@@ -30,9 +30,9 @@ class PSO:
     def best_global_score(self):
         return self._best_global_score
     
-    def optimize(self, max_iterations):
+    def optimize(self, iterations):
         # Move particles up to the maximum number of iterations
-        for i in tqdm(range(max_iterations)):
+        for i in tqdm(range(iterations)):
             # If it's the first iteration, initialize the search space
             if i == 0:
                 self._initialize_search_space(self._swarm_size, self._dimension)
