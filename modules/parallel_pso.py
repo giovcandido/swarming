@@ -4,8 +4,8 @@ import psutil
 
 from tqdm import tqdm
 
-from modules.PSO import PSO
-from modules.Particle import Particle
+from modules.pso import PSO
+from modules.particle import Particle
 
 class ParallelPSO(PSO):
 

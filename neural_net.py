@@ -19,8 +19,8 @@ from torch.autograd import Variable
 from utils.argument_parser import parse_arguments
 from utils.log_creator import create_logger
 
-from modules.PSO import PSO
-from modules.ParallelPSO import ParallelPSO
+from modules.pso import PSO
+from modules.parallel_pso import ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #
