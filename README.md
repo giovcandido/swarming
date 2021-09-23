@@ -12,12 +12,12 @@ In both cases, open the project directory in your terminal.
 
 Now, run the following command:
 ```bash
-sh install_deps.sh
+sh install_requirements.sh
 ```
 
 In case you can't install the dependencies as a user, run the following instead:
 ```bash
-sudo sh install_deps.sh
+sudo sh install_requirements.sh
 ```
 
 ## Usage
