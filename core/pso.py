@@ -2,7 +2,7 @@ import numpy as np
 
 from tqdm import tqdm
 
-from modules.particle import Particle
+from core.particle import Particle
 
 class PSO:
 
