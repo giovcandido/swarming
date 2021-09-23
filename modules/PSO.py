@@ -24,12 +24,12 @@ class PSO:
         return self._particles
     
     @property
-    def best_global_position(self):
-        return self._best_global_position
+    def best_swarm_position(self):
+        return self._best_swarm_position
     
     @property
-    def best_global_score(self):
-        return self._best_global_score
+    def best_swarm_score(self):
+        return self._best_swarm_score
     
     def optimize(self, iterations):
         # Move particles up to the maximum number of iterations
@@ -52,8 +52,8 @@ class PSO:
                 # If necessary, update the best position of the particle
                 self._update_best_position(particle, score)
 
-        # Return the best global position as an approximate solution
-        return self._best_global_position, self._best_global_score
+        # Return the best swarm position as an approximate solution
+        return self._best_swarm_position, self._best_swarm_score
 
     def _initialize_search_space(self):
         self._particles = []
@@ -69,12 +69,12 @@ class PSO:
             particle.best_score = self._function(particle.best_position)
 
             if i == 0:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
+                self._best_swarm_position = particle.best_position
+                self._best_swarm_score = particle.best_score
 
-            if particle.best_score < self._best_global_score:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
+            if particle.best_score < self._best_swarm_score:
+                self._best_swarm_position = particle.best_position
+                self._best_swarm_score = particle.best_score
 
     def _update_velocity(self, particle):
         # Generate two random numbers in [0, 1]
@@ -88,7 +88,7 @@ class PSO:
         cognitive_factor = self._c1 * r1 * (particle.best_position - particle.position)
         
         # Calculate swarm best position influence
-        social_factor = self._c2 * r2 * (self._best_global_position - particle.position)
+        social_factor = self._c2 * r2 * (self._best_swarm_position - particle.position)
 
         # Add all three factors to get the new velocity
         particle.velocity = inertia_factor + cognitive_factor + social_factor
@@ -107,6 +107,6 @@ class PSO:
             particle.best_score = score
 
             # Update the swarm best position, if necessary
-            if particle.best_score < self._best_global_score:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
+            if particle.best_score < self._best_swarm_score:
+                self._best_swarm_position = particle.best_position
+                self._best_swarm_score = particle.best_score

@@ -43,8 +43,8 @@ class ParallelPSO(PSO):
                 # If necessary, update the best position of the particle
                 self._update_best_position(particle, scores[j])
 
-        # Return the best global position as an approximate solution
-        return self._best_global_position, self._best_global_score
+        # Return the best swarm position as an approximate solution
+        return self._best_swarm_position, self._best_swarm_score
 
     def _initialize_search_space(self):
         self._particles = []
@@ -62,9 +62,9 @@ class ParallelPSO(PSO):
             particle.best_score = best_scores[i]
 
             if i == 0:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
+                self._best_swarm_position = particle.best_position
+                self._best_swarm_score = particle.best_score
             
-            if particle.best_score < self._best_global_score:
-                self._best_global_position = particle.best_position
-                self._best_global_score = particle.best_score
+            if particle.best_score < self._best_swarm_score:
+                self._best_swarm_position = particle.best_position
+                self._best_swarm_score = particle.best_score
