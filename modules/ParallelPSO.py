@@ -1,20 +1,15 @@
 import logging
-import numpy as np
 import ray
 import psutil
 
 from tqdm import tqdm
 
+from modules.PSO import PSO
 from modules.Particle import Particle
 
-class ParallelPSO:
+class ParallelPSO(PSO):
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
-        self._w = 0.7
-        self._c1 = 1.7
-        self._c2 = 1.7
-
-        self._swarm_size = swarm_size
-        self._dimension = dimension
+        PSO.__init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds)
 
         # Get number of cpus available including logical threads
         num_cpus = psutil.cpu_count(logical=True)
@@ -24,21 +19,6 @@ class ParallelPSO:
 
         # Save function as ray remote
         self._function = ray.remote(function)
-
-        self._lower_bounds = lower_bounds
-        self._upper_bounds = upper_bounds
-
-    @property
-    def particles(self):
-        return self._particles
-    
-    @property
-    def best_global_position(self):
-        return self._best_global_position
-    
-    @property
-    def best_global_score(self):
-        return self._best_global_score
 
     def optimize(self, iterations):
         # Move particles up to the maximum number of iterations
@@ -87,35 +67,3 @@ class ParallelPSO:
             if particle.best_score < self._best_global_score:
                 self._best_global_position = particle.best_position
                 self._best_global_score = particle.best_score
-
-    def _update_velocity(self, particle):
-        inertia = self._w * particle.velocity
-        
-        r1 = np.random.uniform(0, 1)
-        r2 = np.random.uniform(0, 1)
-        
-        cognitive_component = self._c1 * r1 * (particle.best_position - particle.position)
-        social_component = self._c2 * r2 * (self._best_global_position - particle.position)
-
-        particle.velocity = inertia + cognitive_component + social_component
-
-    def _update_position(self, particle):
-        particle.position = particle.position + particle.velocity
-
-        self._clip_position(particle)
-
-    def _clip_position(self, particle):
-        particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
-
-    def _update_best_position(self, particle, score):
-        if score < particle.best_score:
-            particle.best_position = particle.position
-            particle.best_score = score
-
-            # Update the best global position, if necessary
-            self._update_best_global_position(particle)
-
-    def _update_best_global_position(self, particle):
-        if particle.best_score < self._best_global_score:
-            self._best_global_position = particle.best_position
-            self._best_global_score = particle.best_score
