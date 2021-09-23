@@ -77,15 +77,21 @@ class PSO:
                 self._best_global_score = particle.best_score
 
     def _update_velocity(self, particle):
-        inertia = self._w * particle.velocity
-        
+        # Generate two random numbers in [0, 1]
         r1 = np.random.uniform(0, 1)
         r2 = np.random.uniform(0, 1)
-        
-        cognitive_component = self._c1 * r1 * (particle.best_position - particle.position)
-        social_component = self._c2 * r2 * (self._best_global_position - particle.position)
 
-        particle.velocity = inertia + cognitive_component + social_component
+        # Calculate current velocity influence
+        inertia_factor = self._w * particle.velocity
+
+        # Calculate particle best position influence
+        cognitive_factor = self._c1 * r1 * (particle.best_position - particle.position)
+        
+        # Calculate swarm best position influence
+        social_factor = self._c2 * r2 * (self._best_global_position - particle.position)
+
+        # Add all three factors to get new velocity
+        particle.velocity = inertia_factor + cognitive_factor + social_factor
 
     def _update_position(self, particle):
         particle.position = particle.position + particle.velocity
