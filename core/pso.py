@@ -2,7 +2,11 @@ import numpy as np
 
 from tqdm import tqdm
 
+from utils.logger import Logger
 from core.particle import Particle
+
+# Get logger instance
+logger = Logger.get_logger(__name__)
 
 class PSO:
 
@@ -36,10 +40,37 @@ class PSO:
     def best_swarm_score(self):
         return self._best_swarm_score
     
-    def optimize(self, iterations):
+    def optimize(self, iterations, executions):
+        # Create lists to save output from multiple executions
+        positions, scores = [], []
+
+        # Run the algorithm many times
+        # It helps to check if the restricted search space is appropriate
+        for i in range(executions):
+            # Set a random seed to achieve constant results
+            np.random.seed(i)
+            
+            # Get best position and best score from the current execution
+            curr_position, curr_score = self._run_task(iterations)
+
+            # Save best position from the current execution
+            positions.append(curr_position)
+
+            # Save best score from the current execution
+            scores.append(curr_score)
+
+            # TODO: Show output from the current execution
+        
+        best_score_index = np.argmin(scores)
+        
+        # TODO: Show best output
+        
+        return positions[best_score_index], scores[best_score_index]
+
+    def _run_task(self, iterations):
         # Move particles up to the maximum number of iterations
         for i in tqdm(range(iterations)):
-            # If it's the first iteration, initialize the search space
+            # If first iteration, initialize the search space
             if i == 0:
                 self._initialize_search_space()
 

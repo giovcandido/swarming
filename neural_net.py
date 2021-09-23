@@ -8,7 +8,6 @@
 import torch
 import numpy as np
 
-from time import time
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from torch import optim
@@ -143,38 +142,18 @@ def main():
 
     logger = Logger.get_logger(__name__)
 
-    logger.info('Executing algorithm %i time(s)...' % args.executions)
+    # Create a PSO instance
+    if not args.parallel: 
+        pso = PSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
+    else:
+        pso = ParallelPSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
 
-    # Run the PSO algorithm many times
-    # It helps to check if the restricted search space is appropriate
-    for i in range(1, int(args.executions) + 1):
-        logger.info('==> Execution number %i' % i)
+    # Run optimization task multiple times
+    pso.optimize(args.iterations, args.executions)
 
-        # Defines a random seed to achieve constant results
-        np.random.seed(i)
-
-        # Creates the space, optimizer and function
-        if not args.parallel: 
-            pso = PSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
-        else:
-            pso = ParallelPSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
-
-        start_time = time()
-
-        # Find an approximate solution with PSO
-        approx_sol, fit = pso.optimize(args.iterations)
-
-        end_time = time()
-
-        logger.info('Approximate solution:')
-
-        for i, x in enumerate(approx_sol):
-            x = round(x, 16) + 0
-            logger.info('x[%i] = %.16f' % (i, x))
-
-        logger.info('Fit = %.16f' % fit)
-        logger.info('Acc = %.16f' % ((1 - fit) * 100))
-        logger.info('Time spent: %f s' % (end_time - start_time))
+# ---------------------------------------------------------------------------- #
+#                           Entry point of the script                          #
+# ---------------------------------------------------------------------------- #
 
 if __name__ == '__main__':
     main()

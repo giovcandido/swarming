@@ -21,7 +21,7 @@ class ParallelPSO(PSO):
         # Save function as ray remote
         self._function = ray.remote(function)
 
-    def optimize(self, iterations):
+    def _run_task(self, iterations):
         # Move particles up to the maximum number of iterations
         for i in tqdm(range(iterations)):
             # If it's the first iteration, initialize the search space

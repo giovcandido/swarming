@@ -4,8 +4,6 @@
 
 import numpy as np
 
-from time import time
-
 from utils.argument_parser import parse_arguments
 from utils.logger import Logger
 
@@ -35,42 +33,19 @@ def function(x):
 # ---------------------------------------------------------------------------- #
 
 def main():
-    # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
+    # Parse arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
     
     logger = Logger.get_logger(__name__)
 
-    logger.info('Executing algorithm %i time(s)...' % args.executions)
+    # Create a PSO instance
+    if not args.parallel: 
+        pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
+    else:
+        pso = ParallelPSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
 
-    # Run the PSO algorithm many times
-    # It helps to check if the restricted search space is appropriate
-    for i in range(1, args.executions + 1):
-        logger.info('==> Execution number %i' % i)
-
-        # Defines a random seed to achieve constant results
-        np.random.seed(i)
-
-        # Create a PSO instance
-        if not args.parallel: 
-            pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
-        else:
-            pso = ParallelPSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
-        
-        start_time = time()
-
-        # Find an approximate solution with PSO
-        approx_sol, fit = pso.optimize(args.iterations)
-
-        end_time = time()
-
-        logger.info('Approximate solution:')
-
-        for i, x in enumerate(approx_sol):
-            x = round(x, 4) + 0
-            logger.info('x[%i] = %.4f' % (i, x))
-
-        logger.info('Fit = %.4f' % fit)
-        logger.info('Time spent: %f s' % (end_time - start_time))
+    # Run optimization task multiple times
+    pso.optimize(args.iterations, args.executions)
 
 # ---------------------------------------------------------------------------- #
 #                           Entry point of the script                          #
