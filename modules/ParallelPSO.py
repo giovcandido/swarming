@@ -8,6 +8,7 @@ from modules.PSO import PSO
 from modules.Particle import Particle
 
 class ParallelPSO(PSO):
+
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
         PSO.__init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds)
 
