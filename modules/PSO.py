@@ -101,14 +101,12 @@ class PSO:
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
     def _update_best_position(self, particle, score):
+        # Update the particle best score, if necessary
         if score < particle.best_score:
             particle.best_position = particle.position
             particle.best_score = score
 
-            # Update the best global position, if necessary
-            self._update_best_global_position(particle)
-
-    def _update_best_global_position(self, particle):
-        if particle.best_score < self._best_global_score:
-            self._best_global_position = particle.best_position
-            self._best_global_score = particle.best_score
+            # Update the swarm best position, if necessary
+            if particle.best_score < self._best_global_score:
+                self._best_global_position = particle.best_position
+                self._best_global_score = particle.best_score
