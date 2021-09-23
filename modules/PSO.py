@@ -90,15 +90,14 @@ class PSO:
         # Calculate swarm best position influence
         social_factor = self._c2 * r2 * (self._best_global_position - particle.position)
 
-        # Add all three factors to get new velocity
+        # Add all three factors to get the new velocity
         particle.velocity = inertia_factor + cognitive_factor + social_factor
 
     def _update_position(self, particle):
+        # Add current position and velocity to get the new position
         particle.position = particle.position + particle.velocity
 
-        self._clip_position(particle)
-
-    def _clip_position(self, particle):
+        # Clip the new position, so that the particle stays within the search space bounds
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
     def _update_best_position(self, particle, score):
