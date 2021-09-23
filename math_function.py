@@ -9,8 +9,8 @@ from time import time
 from utils.argument_parser import parse_arguments
 from utils.log_creator import create_logger
 
-from modules.pso import PSO
-from modules.parallel_pso import ParallelPSO
+from core.pso import PSO
+from core.parallel_pso import ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #

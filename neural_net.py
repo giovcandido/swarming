@@ -1,6 +1,4 @@
-# This script is based on one of example scripts in the Opytimizer project repository
-
-# This example script can be found in the following link: 
+# This example was inspired by the following script: 
 # https://github.com/gugarosa/opytimizer/blob/master/examples/integrations/pytorch/neural_network.py
 
 # ---------------------------------------------------------------------------- #
@@ -19,8 +17,8 @@ from torch.autograd import Variable
 from utils.argument_parser import parse_arguments
 from utils.log_creator import create_logger
 
-from modules.pso import PSO
-from modules.parallel_pso import ParallelPSO
+from core.pso import PSO
+from core.parallel_pso import ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #
