@@ -15,7 +15,7 @@ from torch import optim
 from torch.autograd import Variable
 
 from utils.argument_parser import parse_arguments
-from utils.log_creator import create_logger
+from utils.logger import Logger
 
 from core.pso import PSO
 from core.parallel_pso import ParallelPSO
@@ -141,14 +141,14 @@ def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
 
-    logger = create_logger('logs', 'neural_net.log')
+    logger = Logger.get_logger(__name__)
 
-    logger.info('Executing algorithm %i time(s)...\n' % args.executions)
+    logger.info('Executing algorithm %i time(s)...' % args.executions)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
     for i in range(1, int(args.executions) + 1):
-        logger.info('==> Execution number %i\n' % i)
+        logger.info('==> Execution number %i' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)
@@ -173,8 +173,8 @@ def main():
             logger.info('x[%i] = %.16f' % (i, x))
 
         logger.info('Fit = %.16f' % fit)
-        logger.info('Acc = %.16f\n' % ((1 - fit) * 100))
-        logger.info('Time spent: %f s\n' % (end_time - start_time))
+        logger.info('Acc = %.16f' % ((1 - fit) * 100))
+        logger.info('Time spent: %f s' % (end_time - start_time))
 
 if __name__ == '__main__':
     main()

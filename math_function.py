@@ -7,7 +7,7 @@ import numpy as np
 from time import time
 
 from utils.argument_parser import parse_arguments
-from utils.log_creator import create_logger
+from utils.logger import Logger
 
 from core.pso import PSO
 from core.parallel_pso import ParallelPSO
@@ -38,14 +38,14 @@ def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
     
-    logger = create_logger('logs', 'math_function.log')
+    logger = Logger.get_logger(__name__)
 
-    logger.info('Executing algorithm %i time(s)...\n' % args.executions)
+    logger.info('Executing algorithm %i time(s)...' % args.executions)
 
     # Run the PSO algorithm many times
     # It helps to check if the restricted search space is appropriate
     for i in range(1, args.executions + 1):
-        logger.info('==> Execution number %i\n' % i)
+        logger.info('==> Execution number %i' % i)
 
         # Defines a random seed to achieve constant results
         np.random.seed(i)
@@ -69,8 +69,8 @@ def main():
             x = round(x, 4) + 0
             logger.info('x[%i] = %.4f' % (i, x))
 
-        logger.info('Fit = %.4f\n' % fit)
-        logger.info('Time spent: %f s\n' % (end_time - start_time))
+        logger.info('Fit = %.4f' % fit)
+        logger.info('Time spent: %f s' % (end_time - start_time))
 
 # ---------------------------------------------------------------------------- #
 #                           Entry point of the script                          #
