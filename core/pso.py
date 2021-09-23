@@ -27,19 +27,7 @@ class PSO:
 
         self._lower_bounds = lower_bounds
         self._upper_bounds = upper_bounds
-
-    @property
-    def particles(self):
-        return self._particles
-    
-    @property
-    def best_swarm_position(self):
-        return self._best_swarm_position
-    
-    @property
-    def best_swarm_score(self):
-        return self._best_swarm_score
-    
+  
     def optimize(self, iterations, executions):
         # Create lists to save output from multiple executions
         positions, scores = [], []
