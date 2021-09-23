@@ -16,7 +16,7 @@ from sklearn.model_selection import train_test_split
 from torch import optim
 from torch.autograd import Variable
 
-from utils.cli import parse_arguments
+from utils.argument_parser import parse_arguments
 from utils.log_creator import create_logger
 
 from modules.PSO import PSO

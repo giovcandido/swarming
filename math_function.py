@@ -6,7 +6,7 @@ import numpy as np
 
 from time import time
 
-from utils.cli import parse_arguments
+from utils.argument_parser import parse_arguments
 from utils.log_creator import create_logger
 
 from modules.PSO import PSO
