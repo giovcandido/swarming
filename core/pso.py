@@ -7,8 +7,13 @@ from core.particle import Particle
 class PSO:
 
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
+        # Set inertia constant
         self._w = 0.7
+
+        # Set cognitive constant
         self._c1 = 1.7
+
+        # Set social constant
         self._c2 = 1.7
 
         self._swarm_size = swarm_size
