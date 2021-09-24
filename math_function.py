@@ -6,8 +6,7 @@ import numpy as np
 
 from utils.argument_parser import parse_arguments
 
-from core.pso import PSO
-from core.parallel_pso import ParallelPSO
+from core.pso import PSO, ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #
