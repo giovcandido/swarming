@@ -3,6 +3,10 @@ import numpy as np
 from tqdm import tqdm
 
 from core.particle import Particle
+from utils.logger import Logger
+
+# Get logger instance
+logger = Logger.get_logger(__name__)
 
 class PSO:
 
