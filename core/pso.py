@@ -61,17 +61,15 @@ class PSO:
 
             # Loop over all particles in the swarm
             for particle in self._swarm:
-                # Update particle current velocity
-                self._update_velocity(particle)
-
-                # Move particle considering its new velocity
-                self._update_position(particle)
-
+                # Update velocity and position
+                self._update(particle)
+                
                 # Calculate particle score
                 score = self._function(particle.position)
 
                 # If necessary, update the best position of the particle
-                self._update_best_position(particle, score)
+                if score < particle.best_score:
+                    self._update_best_position(particle, score)
 
         # Return the best swarm position as an approximate solution
         return self._best_swarm_position, self._best_swarm_score
@@ -93,17 +91,13 @@ class PSO:
                 self._best_swarm_score = particle.best_score
             
             # Update best swarm position, if necessary
-            self._update_best_swarm_position(particle)
+            if particle.best_score < self._best_swarm_score:
+                self._update_best_swarm_position(particle)
             
             # Add particle to particles list
             self._swarm.append(particle)
 
-    def _update_best_swarm_position(self, particle):
-        if particle.best_score < self._best_swarm_score:
-            self._best_swarm_position = particle.best_position
-            self._best_swarm_score = particle.best_score
-
-    def _update_velocity(self, particle):
+    def _update(self, particle):
         # Generate two random numbers in [0, 1]
         r1 = np.random.uniform(0, 1)
         r2 = np.random.uniform(0, 1)
@@ -120,7 +114,6 @@ class PSO:
         # Add all three factors to get the new velocity
         particle.velocity = inertia_factor + cognitive_factor + social_factor
 
-    def _update_position(self, particle):
         # Add current position and velocity to get the new position
         particle.position = particle.position + particle.velocity
 
@@ -128,10 +121,13 @@ class PSO:
         particle.position = np.clip(particle.position, self._lower_bounds, self._upper_bounds)
 
     def _update_best_position(self, particle, score):
-        # Update the particle best score, if necessary
-        if score < particle.best_score:
-            particle.best_position = particle.position
-            particle.best_score = score
+        particle.best_position = particle.position
+        particle.best_score = score
 
-            # Update the swarm best position, if necessary
+        # Update the swarm best position, if necessary
+        if particle.best_score < self._best_swarm_score:
             self._update_best_swarm_position(particle)
+    
+    def _update_best_swarm_position(self, particle):
+        self._best_swarm_position = particle.best_position
+        self._best_swarm_score = particle.best_score
