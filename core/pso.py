@@ -53,12 +53,11 @@ class PSO:
         return positions[best_score_index], scores[best_score_index]
 
     def _run_task(self, iterations):
-        # Move particles up to the maximum number of iterations
-        for i in tqdm(range(iterations)):
-            # If first iteration, initialize the search space
-            if i == 0:
-                self._initialize_search_space()
+        # Initialize the search space
+        self._initialize_search_space()
 
+        # Move particles up to the maximum number of iterations
+        for _ in tqdm(range(iterations)):
             # Loop over all particles in the swarm
             for particle in self._swarm:
                 # Update velocity and position
@@ -78,7 +77,7 @@ class PSO:
         self._swarm = []
 
         # Initialize the particles in the swarm
-        for i in range(self._swarm_size):
+        for i in tqdm(range(self._swarm_size)):
             # Create an instance of the particle class
             particle = Particle(self._dimension, self._lower_bounds, self._upper_bounds)
 

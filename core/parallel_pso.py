@@ -22,12 +22,11 @@ class ParallelPSO(PSO):
         self._function = ray.remote(function)
 
     def _run_task(self, iterations):
-        # Move particles up to the maximum number of iterations
-        for i in tqdm(range(iterations)):
-            # If it's the first iteration, initialize the search space
-            if i == 0:
-                self._initialize_search_space()
+        # Initialize the search space
+        self._initialize_search_space()
 
+        # Move particles up to the maximum number of iterations
+        for _ in tqdm(range(iterations)):
             # Loop over all particles in the swarm
             for particle in self._swarm:
                 # Update velocity and position
@@ -36,10 +35,10 @@ class ParallelPSO(PSO):
             scores = ray.get([self._function.remote(p.position) for p in self._swarm])
 
             # Loop over all particles in the swarm
-            for j, particle in enumerate(self._swarm):
+            for i, particle in enumerate(self._swarm):
                 # If necessary, update the best position of the particle
-                if scores[j] < particle.best_score:
-                    self._update_best_position(particle, scores[j])
+                if scores[i] < particle.best_score:
+                    self._update_best_position(particle, scores[i])
 
         # Return the best swarm position as an approximate solution
         return self._best_swarm_position, self._best_swarm_score
@@ -53,15 +52,18 @@ class ParallelPSO(PSO):
             
             self._swarm.append(p)
             
-        best_scores = ray.get([self._function.remote(p.best_position) for p in self._swarm])
+        scores = ray.get([self._function.remote(p.best_position) for p in tqdm(self._swarm)])
 
-        # Initialize the best position of the whole swarm
-        for i, particle in enumerate(self._swarm):
-            particle.best_score = best_scores[i]
+        # Set best score of the firt particle
+        self._swarm[0].best_score = scores[0]
 
-            if i == 0:
-                self._best_swarm_position = particle.best_position
-                self._best_swarm_score = particle.best_score
+        # Initialize best swarm position
+        self._best_swarm_position = self._swarm[0].best_position
+        self._best_swarm_score = self._swarm[0].best_score
+
+        # Initialize the best score of the remaining particles
+        for i, particle in enumerate(self._swarm[1:], 1):
+            particle.best_score = scores[i]
             
             # Update best swarm position, if necessary
             if particle.best_score < self._best_swarm_score:
