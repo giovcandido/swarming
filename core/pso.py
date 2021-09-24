@@ -1,9 +1,11 @@
 import numpy as np
 
+from time import time
 from tqdm import tqdm
 
-from core.particle import Particle
 from utils.logger import Logger
+
+from core.particle import Particle
 
 # Get logger instance
 logger = Logger.get_logger(__name__)
@@ -11,6 +13,8 @@ logger = Logger.get_logger(__name__)
 class PSO:
 
     def __init__(self, swarm_size, dimension, function, lower_bounds, upper_bounds):
+        logger.info('Creating an instance of the PSO class')
+
         # Set inertia constant
         self._w = 0.7
 
@@ -20,20 +24,36 @@ class PSO:
         # Set social constant
         self._c2 = 1.7
 
+        logger.debug('Inertia Constant = %s' % (self._w))
+        logger.debug('Cognitive Constant = %s' % (self._c1))
+        logger.debug('Social Constant = %s' % (self._c2))
+
         # Set number of particles in the swarm
         self._swarm_size = swarm_size
         
         # Set search space dimension
         self._dimension = dimension
 
+        logger.debug('Swarm size = %s' % (self._swarm_size))
+        logger.debug('Dimension = %s' % (self._dimension))
+
         # Set function to be optimized
         self._function = function
+
+        logger.debug('Function = %s' % (self._function))
 
         # Set search space boundaries
         self._lower_bounds = lower_bounds
         self._upper_bounds = upper_bounds
 
+        logger.debug('Lower Bounds = %s' % (self._lower_bounds))
+        logger.debug('Upper Bounds = %s' % (self._upper_bounds))
+
+        logger.info('PSO instance was created successfully')
+
     def optimize(self, iterations, executions):
+        logger.info('Task has %s executions with %s iterations each' % (executions, iterations))
+
         # Create lists to save output from multiple executions
         positions, scores = [], []
 
@@ -42,26 +62,54 @@ class PSO:
         for i in range(executions):
             # Set a random seed to achieve constant results
             np.random.seed(i)
+
+            logger.debug('Random Seed = %s' % (i))
+            
+            logger.info('Execution %s is in progress' % (i + 1))
+
+            start_time = time()
             
             # Get best position and best score from the current execution
-            curr_position, curr_score = self._run_task(iterations)
+            curr_position, curr_score = self._execute(iterations)
+            
+            end_time = time()
+
+            logger.info('Execution %s ended successfully' % (i + 1))
+
+            logger.info('It took %s s' % (end_time - start_time))
 
             # Save best position from the current execution
             positions.append(curr_position)
 
             # Save best score from the current execution
             scores.append(curr_score)
+
+            logger.info('Execution best position = %s' % (curr_position))
+            logger.info('Execution Best score = %s' % (curr_score))
         
         best_score_index = np.argmin(scores)
 
+        logger.info('Execution %s had the best score' % (best_score_index + 1))
+
+        logger.info('Task best position = %s' % (positions[best_score_index]))
+        logger.info('Task best score = %s' % (scores[best_score_index]))
+
         return positions[best_score_index], scores[best_score_index]
 
-    def _run_task(self, iterations):
+    def _execute(self, iterations):
+        logger.info('Initializing the search space with %s particles' % (self._swarm_size))
+
         # Initialize the search space
         self._initialize_search_space()
 
+        logger.info('Search space was initialized successfully')
+
+        logger.info('Moving particles around the search space for %s iterations' % (iterations))
+
         # Move particles up to the maximum number of iterations
-        for _ in tqdm(range(iterations)):
+        for i in tqdm(range(iterations)):
+            logger.write('Iteration %s/%s' % (i + 1, iterations))
+            
             # Loop over all particles in the swarm
             for particle in self._swarm:
                 # Update velocity and position
@@ -73,6 +121,9 @@ class PSO:
                 # If necessary, update the best position of the particle
                 if score < particle.best_score:
                     self._update_best_position(particle, score)
+            
+            logger.write('Iteration best position = %s' % (self._best_swarm_position))
+            logger.write('Iteration best score = %s' % (self._best_swarm_score))
 
         # Return the best swarm position as an approximate solution
         return self._best_swarm_position, self._best_swarm_score
