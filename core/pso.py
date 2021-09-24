@@ -60,7 +60,7 @@ class PSO:
                 self._initialize_search_space()
 
             # Loop over all particles in the swarm
-            for particle in self._particles:
+            for particle in self._swarm:
                 # Update particle current velocity
                 self._update_velocity(particle)
 
@@ -77,25 +77,31 @@ class PSO:
         return self._best_swarm_position, self._best_swarm_score
 
     def _initialize_search_space(self):
-        self._particles = []
+        self._swarm = []
 
         # Initialize the particles in the swarm
-        for _ in range(self._swarm_size):
-            p = Particle(self._dimension, self._lower_bounds, self._upper_bounds)
+        for i in range(self._swarm_size):
+            # Create an instance of the particle class
+            particle = Particle(self._dimension, self._lower_bounds, self._upper_bounds)
 
-            self._particles.append(p)
-
-        # Initialize the best position of the whole swarm
-        for i, particle in enumerate(self._particles):
+            # Calculate particle score
             particle.best_score = self._function(particle.best_position)
 
+            # Initialize best swarm position
             if i == 0:
                 self._best_swarm_position = particle.best_position
                 self._best_swarm_score = particle.best_score
+            
+            # Update best swarm position, if necessary
+            self._update_best_swarm_position(particle)
+            
+            # Add particle to particles list
+            self._swarm.append(particle)
 
-            if particle.best_score < self._best_swarm_score:
-                self._best_swarm_position = particle.best_position
-                self._best_swarm_score = particle.best_score
+    def _update_best_swarm_position(self, particle):
+        if particle.best_score < self._best_swarm_score:
+            self._best_swarm_position = particle.best_position
+            self._best_swarm_score = particle.best_score
 
     def _update_velocity(self, particle):
         # Generate two random numbers in [0, 1]
@@ -128,6 +134,4 @@ class PSO:
             particle.best_score = score
 
             # Update the swarm best position, if necessary
-            if particle.best_score < self._best_swarm_score:
-                self._best_swarm_position = particle.best_position
-                self._best_swarm_score = particle.best_score
+            self._update_best_swarm_position(particle)
