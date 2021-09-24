@@ -1,7 +1,7 @@
-import logging
 import ray
-import psutil
 
+from logging import FATAL
+from psutil import cpu_count 
 from tqdm import tqdm
 
 from utils.logger import Logger
@@ -20,12 +20,12 @@ class ParallelPSO(PSO):
         logger.info('Specializing instance as one of the ParallelPSO class')
 
         # Get number of cpus available including logical threads
-        num_cpus = psutil.cpu_count(logical=True)
+        num_cpus = cpu_count(logical=True)
 
         logger.debug('Threads = %s' % (num_cpus))
 
         # Initialize ray instance
-        ray.init(num_cpus=num_cpus, logging_level=logging.FATAL)
+        ray.init(num_cpus=num_cpus, logging_level=FATAL)
         
         logger.info('Ray was initialized successfully')
 
