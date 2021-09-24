@@ -12,6 +12,9 @@
 # Saved pickles
 **/*.pkl
 
+# Numpy npy
+*.npy
+
 # Downloaded datasets
 datasets/**/*
 
