@@ -2,11 +2,7 @@ import numpy as np
 
 from tqdm import tqdm
 
-from utils.logger import Logger
 from core.particle import Particle
-
-# Get logger instance
-logger = Logger.get_logger(__name__)
 
 class PSO:
 
@@ -20,14 +16,19 @@ class PSO:
         # Set social constant
         self._c2 = 1.7
 
+        # Set number of particles in the swarm
         self._swarm_size = swarm_size
+        
+        # Set search space dimension
         self._dimension = dimension
 
+        # Set function to be optimized
         self._function = function
 
+        # Set search space boundaries
         self._lower_bounds = lower_bounds
         self._upper_bounds = upper_bounds
-  
+
     def optimize(self, iterations, executions):
         # Create lists to save output from multiple executions
         positions, scores = [], []
@@ -46,13 +47,9 @@ class PSO:
 
             # Save best score from the current execution
             scores.append(curr_score)
-
-            # TODO: Show output from the current execution
         
         best_score_index = np.argmin(scores)
-        
-        # TODO: Show best output
-        
+
         return positions[best_score_index], scores[best_score_index]
 
     def _run_task(self, iterations):
