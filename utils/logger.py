@@ -1,11 +1,13 @@
 import sys
 import logging
 
+from time import strftime
+
 class Logger(logging.Logger):
 
-    LOGGING_FORMAT = "[%(asctime)s] %(name)s - %(levelname)s: %(message)s"
+    LOGGING_FORMAT = "[%(asctime)s] %(name)17s - %(levelname)5s - %(message)s"
 
-    LOGGING_FILE = 'execution.log'
+    LOGGING_FILE = 'execution-%s.log' % (strftime("%Y%m%d-%H%M%S"))
 
     def get_logger(logger_name):
         # Set this class as the logger
@@ -15,7 +17,7 @@ class Logger(logging.Logger):
         logger = logging.getLogger(logger_name)
 
         # Set the default logger level
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logging.DEBUG)
 
         # Create a stream handler
         stream_handler = logging.StreamHandler(sys.stdout)
@@ -28,7 +30,7 @@ class Logger(logging.Logger):
         # Add handlers to logger instance
         logger.addHandler(stream_handler)
         logger.addHandler(file_handler)
-        
+
         return logger
 
     def write(self, message):
