@@ -97,8 +97,6 @@ class PSO:
         logger.info('Task best position = %s' % (positions[best_score_index]))
         logger.info('Task best score = %s' % (scores[best_score_index]))
 
-        return positions[best_score_index], scores[best_score_index]
-
     def _execute(self, iterations):
         logger.info('Initializing the search space with %s particles' % (self._swarm_size))
 
