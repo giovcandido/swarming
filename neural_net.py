@@ -14,7 +14,6 @@ from torch import optim
 from torch.autograd import Variable
 
 from utils.argument_parser import parse_arguments
-from utils.logger import Logger
 
 from core.pso import PSO
 from core.parallel_pso import ParallelPSO
@@ -139,8 +138,6 @@ def neural_network(arr):
 def main():
     # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
-
-    logger = Logger.get_logger(__name__)
 
     # Create a PSO instance
     if not args.parallel: 

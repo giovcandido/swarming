@@ -5,7 +5,6 @@
 import numpy as np
 
 from utils.argument_parser import parse_arguments
-from utils.logger import Logger
 
 from core.pso import PSO
 from core.parallel_pso import ParallelPSO
@@ -36,8 +35,6 @@ def main():
     # Parse arguments, such as if the execution should be in parallel, swarm size etc.
     args = parse_arguments()
     
-    logger = Logger.get_logger(__name__)
-
     # Create a PSO instance
     if not args.parallel: 
         pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
