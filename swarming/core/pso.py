@@ -6,9 +6,9 @@ from psutil import cpu_count
 from time import time
 from tqdm import tqdm
 
-from utils.logger import Logger
+from swarming.utils.logger import Logger
 
-from core.particle import Particle
+from swarming.core.particle import Particle
 
 # Get logger instance
 logger = Logger.get_logger(__name__)
