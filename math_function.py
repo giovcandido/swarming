@@ -4,9 +4,9 @@
 
 import numpy as np
 
-from utils.argument_parser import parse_arguments
+from swarming.utils.argument_parser import parse_arguments
 
-from core.pso import PSO, ParallelPSO
+from swarming.core.pso import PSO, ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #

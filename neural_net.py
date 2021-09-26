@@ -13,9 +13,9 @@ from sklearn.model_selection import train_test_split
 from torch import optim
 from torch.autograd import Variable
 
-from utils.argument_parser import parse_arguments
+from swarming.utils.argument_parser import parse_arguments
 
-from core.pso import PSO, ParallelPSO
+from swarming.core.pso import PSO, ParallelPSO
 
 # ---------------------------------------------------------------------------- #
 #                            Problem definition part                           #
