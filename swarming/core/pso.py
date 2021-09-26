@@ -3,7 +3,7 @@ import numpy as np
 
 from logging import FATAL
 from psutil import cpu_count 
-from time import time
+from time import time, strftime
 from tqdm import tqdm
 
 from swarming.utils.logger import Logger
@@ -98,7 +98,7 @@ class PSO:
         logger.info('Task best score = %s' % (scores[best_score_index]))
 
         # Save task best position
-        np.save('task_best_position', positions[best_score_index])
+        np.save('task_best_position-' + strftime("%Y%m%d-%H%M%S"), positions[best_score_index])
 
     def _execute(self, iterations):
         logger.info('Initializing the search space with %s particles' % (self._swarm_size))
