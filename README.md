@@ -1,4 +1,4 @@
-# PSO Optimization
+# Swarming
 
 Particle Swarm Optimization algorithm with serial and distributed execution. 
 
