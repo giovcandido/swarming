@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
-# Load long description 
-with open("README.md", encoding='utf-8') as f:
+# Load long description
+with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 # Load requirements
-with open("requirements.txt", encoding='utf-8') as f:
+with open('requirements.txt', encoding='utf-8') as f:
     requirements = f.read()
 
-# Configure setup 
+# Configure setup
 setup(
     name = 'swarming',
     author = 'Giovani Candido',
