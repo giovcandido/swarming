@@ -1,11 +1,11 @@
-import sys
 import logging
 
+from sys import stdout as sys_stdout
 from time import strftime
 
 class Logger(logging.Logger):
 
-    LOGGING_FORMAT = "[%(asctime)s] %(name)17s - %(levelname)5s - %(message)s"
+    LOGGING_FORMAT = '[%(asctime)s] %(name)17s - %(levelname)5s - %(message)s'
 
     LOGGING_FILE = 'task-%s.log' % (strftime("%Y%m%d-%H%M%S"))
 
@@ -20,13 +20,13 @@ class Logger(logging.Logger):
         logger.setLevel(logging.DEBUG)
 
         # Create a stream handler
-        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler = logging.StreamHandler(sys_stdout)
         stream_handler.setFormatter(logging.Formatter(Logger.LOGGING_FORMAT))
 
         # Create a file handler
         file_handler = logging.FileHandler(Logger.LOGGING_FILE)
         file_handler.setFormatter(logging.Formatter(Logger.LOGGING_FORMAT))
-    
+
         # Add handlers to logger instance
         logger.addHandler(stream_handler)
         logger.addHandler(file_handler)
