@@ -1,5 +1,4 @@
-# This example was inspired by the following script:
-# https://github.com/gugarosa/opytimizer/blob/master/examples/integrations/pytorch/neural_network.py
+# This example was inspired by the following script: https://bit.ly/39E7gvK
 
 # ---------------------------------------------------------------------------- #
 #                          Import the required modules                         #
