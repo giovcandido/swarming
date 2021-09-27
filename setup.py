@@ -1,5 +1,10 @@
 from setuptools import setup, find_packages
 
+from os.path import join
+
+# Load version
+exec(open(join('swarming', 'version.py')).read())
+
 # Load long description
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
@@ -11,6 +16,7 @@ with open('requirements.txt', encoding='utf-8') as f:
 # Configure setup
 setup(
     name = 'swarming',
+    version = __version__, # type: ignore
     author = 'Giovani Candido',
     author_email = 'giovcandido@outlook.com',
     license = 'GNU General Public License v3.0',
