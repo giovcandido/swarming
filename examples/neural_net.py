@@ -1,4 +1,4 @@
-# This example was inspired by the following script: 
+# This example was inspired by the following script:
 # https://github.com/gugarosa/opytimizer/blob/master/examples/integrations/pytorch/neural_network.py
 
 # ---------------------------------------------------------------------------- #
@@ -33,7 +33,7 @@ upper_bounds = [1, 1]
 # Load digit images from the dataset
 digits = load_digits()
 
-# X receives the data 
+# X receives the data
 X = digits.data
 
 # Y receives the labels
@@ -135,14 +135,17 @@ def neural_network(arr):
 # ---------------------------------------------------------------------------- #
 
 def main():
-    # Parse some arguments, such as if the execution should be in parallel, swarm size etc.
+    # Parse arguments, such as parallel, swarm size etc.
     args = parse_arguments()
 
-    # Create a PSO instance
-    if not args.parallel: 
-        pso = PSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
+    # Select the desired PSO class
+    if not parallel:
+        PSOClass = PSO
     else:
-        pso = ParallelPSO(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
+        PSOClass = ParallelPSO
+
+    # Create a PSO instance
+    pso = PSOClass(swarm_size, dimension, function, lower_bounds, upper_bounds)
 
     # Run optimization task multiple times
     pso.optimize(args.iterations, args.executions)

@@ -23,7 +23,7 @@ lower_bounds = np.full(dimension, -100)
 upper_bounds = np.full(dimension, 100)
 
 # Function to be optimized
-def function(x):    
+def function(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 # ---------------------------------------------------------------------------- #
@@ -31,14 +31,17 @@ def function(x):
 # ---------------------------------------------------------------------------- #
 
 def main():
-    # Parse arguments, such as if the execution should be in parallel, swarm size etc.
+    # Parse arguments, such as parallel, swarm size etc.
     args = parse_arguments()
-    
-    # Create a PSO instance
-    if not args.parallel: 
-        pso = PSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
+
+    # Select the desired PSO class
+    if not parallel:
+        PSOClass = PSO
     else:
-        pso = ParallelPSO(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
+        PSOClass = ParallelPSO
+
+    # Create a PSO instance
+    pso = PSOClass(swarm_size, dimension, function, lower_bounds, upper_bounds)
 
     # Run optimization task multiple times
     pso.optimize(args.iterations, args.executions)
