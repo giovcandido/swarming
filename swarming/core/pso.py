@@ -2,7 +2,7 @@ import ray
 import numpy as np
 
 from logging import FATAL
-from psutil import cpu_count 
+from psutil import cpu_count
 from time import time, strftime
 from tqdm import tqdm
 
@@ -33,7 +33,7 @@ class PSO:
 
         # Set number of particles in the swarm
         self._swarm_size = swarm_size
-        
+
         # Set search space dimension
         self._dimension = dimension
 
@@ -54,7 +54,7 @@ class PSO:
 
         logger.info('PSO instance was created successfully')
 
-    def optimize(self, iterations, executions):
+    def optimize(self, iterations, executions=1):
         logger.info('Task has %s executions with %s iterations each' % (executions, iterations))
 
         # Create lists to save output from multiple executions
@@ -67,14 +67,14 @@ class PSO:
             np.random.seed(i)
 
             logger.debug('Random Seed = %s' % (i))
-            
+
             logger.info('Execution %s is in progress' % (i + 1))
 
             start_time = time()
-            
+
             # Get best position and best score from the current execution
             curr_position, curr_score = self._execute(iterations)
-            
+
             end_time = time()
 
             logger.info('Execution %s ended successfully' % (i + 1))
@@ -89,7 +89,7 @@ class PSO:
 
             logger.info('Execution best position = %s' % (curr_position))
             logger.info('Execution Best score = %s' % (curr_score))
-        
+
         best_score_index = np.argmin(scores)
 
         logger.info('Execution %s had the best score' % (best_score_index + 1))
@@ -113,19 +113,19 @@ class PSO:
         # Move particles up to the maximum number of iterations
         for i in tqdm(range(iterations)):
             logger.write('Iteration %s/%s' % (i + 1, iterations))
-            
+
             # Loop over all particles in the swarm
             for particle in self._swarm:
                 # Update velocity and position
                 self._update(particle)
-                
+
                 # Calculate particle score
                 score = self._function(particle.position)
 
                 # If necessary, update the best position of the particle
                 if score < particle.best_score:
                     self._update_best_position(particle, score)
-            
+
             logger.write('Iteration best position = %s' % (self._best_swarm_position))
             logger.write('Iteration best score = %s' % (self._best_swarm_score))
 
@@ -147,11 +147,11 @@ class PSO:
             if i == 0:
                 self._best_swarm_position = particle.best_position
                 self._best_swarm_score = particle.best_score
-            
+
             # Update best swarm position, if necessary
             if particle.best_score < self._best_swarm_score:
                 self._update_best_swarm_position(particle)
-            
+
             # Add particle to particles list
             self._swarm.append(particle)
 
@@ -165,7 +165,7 @@ class PSO:
 
         # Calculate particle best position influence
         cognitive_factor = self._c1 * r1 * (particle.best_position - particle.position)
-        
+
         # Calculate swarm best position influence
         social_factor = self._c2 * r2 * (self._best_swarm_position - particle.position)
 
@@ -185,7 +185,7 @@ class PSO:
         # Update the swarm best position, if necessary
         if particle.best_score < self._best_swarm_score:
             self._update_best_swarm_position(particle)
-    
+
     def _update_best_swarm_position(self, particle):
         self._best_swarm_position = particle.best_position
         self._best_swarm_score = particle.best_score
@@ -205,7 +205,7 @@ class ParallelPSO(PSO):
 
         # Initialize ray instance
         ray.init(num_cpus=num_cpus, logging_level=FATAL)
-        
+
         logger.info('Ray was initialized successfully')
 
         # Save function as ray remote
@@ -244,7 +244,7 @@ class ParallelPSO(PSO):
 
             logger.write('Iteration best position = %s' % (self._best_swarm_position))
             logger.write('Iteration best score = %s' % (self._best_swarm_score))
-            
+
         # Return the best swarm position as an approximate solution
         return self._best_swarm_position, self._best_swarm_score
 
@@ -256,7 +256,7 @@ class ParallelPSO(PSO):
             particle = Particle(self._dimension, self._lower_bounds, self._upper_bounds)
 
             self._swarm.append(particle)
-            
+
         scores = ray.get([self._function.remote(p.best_position) for p in tqdm(self._swarm)])
 
         # Set best score of the firt particle
@@ -269,7 +269,7 @@ class ParallelPSO(PSO):
         # Initialize the best score of the remaining particles
         for i, particle in enumerate(self._swarm[1:], 1):
             particle.best_score = scores[i]
-            
+
             # Update best swarm position, if necessary
             if particle.best_score < self._best_swarm_score:
                 self._update_best_swarm_position(particle)
