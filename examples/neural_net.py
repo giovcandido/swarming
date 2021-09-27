@@ -8,7 +8,7 @@ import torch
 import numpy as np
 
 from sklearn.datasets import load_digits
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split as split
 from torch import optim
 from torch.autograd import Variable
 
@@ -39,7 +39,7 @@ X = digits.data
 Y = digits.target
 
 # Split data/label in train and validation sets
-X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.5, random_state=42)
+X_train, X_val, Y_train, Y_val = split(X, Y, test_size=0.5, random_state=42)
 
 # Convert from numpy array to torch tensors
 X_train = torch.from_numpy(X_train).float()
@@ -53,19 +53,14 @@ def neural_network(arr):
     # Create an instance of the model
     model = torch.nn.Sequential()
 
-    # Set some parameters
-    n_features = 64
-    n_hidden = 128
-    n_classes = 10
-
     # Add first linear layer
-    model.add_module("linear_1", torch.nn.Linear(n_features, n_hidden, bias=False))
+    model.add_module("linear_1", torch.nn.Linear(64, 128, bias=False))
 
     # Add a sigmoid activation
     model.add_module("sigmoid_1", torch.nn.Sigmoid())
 
     # And a second linear layer
-    model.add_module("linear_2", torch.nn.Linear(n_hidden, n_classes, bias=False))
+    model.add_module("linear_2", torch.nn.Linear(128, 10, bias=False))
 
     # Set batch size and epoch
     batch_size = 100
