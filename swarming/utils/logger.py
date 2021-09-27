@@ -7,7 +7,7 @@ class Logger(logging.Logger):
 
     LOGGING_FORMAT = '[%(asctime)s] %(name)17s - %(levelname)5s - %(message)s'
 
-    LOGGING_FILE = 'task-%s.log' % (strftime("%Y%m%d-%H%M%S"))
+    LOGGING_FILE = 'task-%s.log' % (strftime('%Y%m%d-%H%M%S'))
 
     def get_logger(logger_name):
         # Set this class as the logger
