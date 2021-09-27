@@ -1,10 +1,10 @@
-import numpy as np
+from numpy import random, zeros
 
 class Particle:
 
     def __init__(self, dimension, lower_bouds, upper_bounds):
-        self._position = np.random.uniform(lower_bouds, upper_bounds, dimension)
-        self._velocity = np.zeros(dimension)
+        self._position = random.uniform(lower_bouds, upper_bounds, dimension)
+        self._velocity = zeros(dimension)
 
         self._best_position = self._position
 
@@ -21,7 +21,7 @@ class Particle:
     @property
     def best_position(self):
         return self._best_position
-    
+
     @property
     def best_score(self):
         return self._best_score
