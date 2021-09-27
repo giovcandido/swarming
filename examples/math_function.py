@@ -35,7 +35,7 @@ def main():
     args = parse_arguments()
 
     # Select the desired PSO class
-    if not parallel:
+    if not args.parallel:
         PSOClass = PSO
     else:
         PSOClass = ParallelPSO
