@@ -54,13 +54,13 @@ def neural_network(arr):
     model = torch.nn.Sequential()
 
     # Add first linear layer
-    model.add_module("linear_1", torch.nn.Linear(64, 128, bias=False))
+    model.add_module('linear_1', torch.nn.Linear(64, 128, bias=False))
 
     # Add a sigmoid activation
-    model.add_module("sigmoid_1", torch.nn.Sigmoid())
+    model.add_module('sigmoid_1', torch.nn.Sigmoid())
 
     # And a second linear layer
-    model.add_module("linear_2", torch.nn.Linear(128, 10, bias=False))
+    model.add_module('linear_2', torch.nn.Linear(128, 10, bias=False))
 
     # Set batch size and epoch
     batch_size = 100
@@ -139,7 +139,7 @@ def main():
         PSOClass = ParallelPSO
 
     # Create a PSO instance
-    pso = PSOClass(swarm_size, dimension, function, lower_bounds, upper_bounds)
+    pso = PSOClass(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
 
     # Run optimization task multiple times
     pso.optimize(args.iterations, args.executions)

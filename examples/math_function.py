@@ -41,7 +41,7 @@ def main():
         PSOClass = ParallelPSO
 
     # Create a PSO instance
-    pso = PSOClass(swarm_size, dimension, function, lower_bounds, upper_bounds)
+    pso = PSOClass(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
 
     # Run optimization task multiple times
     pso.optimize(args.iterations, args.executions)
