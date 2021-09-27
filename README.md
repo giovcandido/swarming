@@ -189,6 +189,8 @@ You can pick any script to test. Moreover, you can change them as you want.
 In order to test Swarming for the first time, keep the scripts unchanged
 and execute them.
 
+They use the parser, so you need to pass the required arguments.
+
 The first script can be executed as follows:
 ```bash
 python3 math_function.py --swarm-size 20 --iterations 1000
