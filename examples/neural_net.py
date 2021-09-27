@@ -1,9 +1,5 @@
 # This example was inspired by the following script: https://bit.ly/39E7gvK
 
-# ---------------------------------------------------------------------------- #
-#                          Import the required modules                         #
-# ---------------------------------------------------------------------------- #
-
 import torch
 import numpy as np
 
@@ -16,37 +12,20 @@ from swarming.utils.argument_parser import parse_arguments
 
 from swarming.core.pso import PSO, ParallelPSO
 
-# ---------------------------------------------------------------------------- #
-#                            Problem definition part                           #
-# ---------------------------------------------------------------------------- #
-
-# Function dimension
-dimension = 2
-
-# Now, let's set the bounds in order to restric the search space
-lower_bounds = [0, 0]
-upper_bounds = [1, 1]
-
-# ----------------------------- Data preparation ----------------------------- #
-
 # Load digit images from the dataset
 digits = load_digits()
 
-# X receives the data
+# X receives the data, Y the labels
 X = digits.data
-
-# Y receives the labels
 Y = digits.target
 
-# Split data/label in train and validation sets
+# Make train and validation sets
 X_train, X_val, Y_train, Y_val = split(X, Y, test_size=0.5, random_state=42)
 
 # Convert from numpy array to torch tensors
 X_train = torch.from_numpy(X_train).float()
-X_val = torch.from_numpy(X_val).float()
 Y_train = torch.from_numpy(Y_train).long()
-
-# --------------------------------- Function --------------------------------- #
+X_val = torch.from_numpy(X_val).float()
 
 # Function to be optimized
 def neural_network(arr):
@@ -124,29 +103,33 @@ def neural_network(arr):
     # Return error rate to be minimized
     return 1 - acc
 
-# ---------------------------------------------------------------------------- #
-#                 Main function, where the optimization occurs                 #
-# ---------------------------------------------------------------------------- #
-
 def main():
     # Parse arguments, such as parallel, swarm size etc.
     args = parse_arguments()
 
+    parallel = args.parallel
+    swarm_size = args.swarm_size
+    iterations = args.iterations
+    executions = args.executions
+
+    # Function dimension
+    dimension = 2
+
+    # Now, let's set the bounds in order to restric the search space
+    l_bounds = [0, 0]
+    u_bounds = [1, 1]
+
     # Select the desired PSO class
-    if not args.parallel:
+    if not parallel:
         PSOClass = PSO
     else:
         PSOClass = ParallelPSO
 
     # Create a PSO instance
-    pso = PSOClass(args.swarm_size, dimension, neural_network, lower_bounds, upper_bounds)
+    pso = PSOClass(swarm_size, dimension, neural_network, l_bounds, u_bounds)
 
     # Run optimization task multiple times
-    pso.optimize(args.iterations, args.executions)
-
-# ---------------------------------------------------------------------------- #
-#                           Entry point of the script                          #
-# ---------------------------------------------------------------------------- #
+    pso.optimize(iterations, executions)
 
 if __name__ == '__main__':
     main()
