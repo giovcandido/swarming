@@ -23,7 +23,7 @@ lower_bounds = np.full(dimension, -100)
 upper_bounds = np.full(dimension, 100)
 
 # Function to be optimized
-def function(x):
+def polynomial(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 # ---------------------------------------------------------------------------- #
@@ -41,7 +41,7 @@ def main():
         PSOClass = ParallelPSO
 
     # Create a PSO instance
-    pso = PSOClass(args.swarm_size, dimension, function, lower_bounds, upper_bounds)
+    pso = PSOClass(args.swarm_size, dimension, polynomial, lower_bounds, upper_bounds)
 
     # Run optimization task multiple times
     pso.optimize(args.iterations, args.executions)

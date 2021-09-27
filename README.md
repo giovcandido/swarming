@@ -80,7 +80,7 @@ a total of 1000 iterations.
 ```python
 from swarming.core.pso import PSO
 
-def function(x):
+def polynomial(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 swarm_size = 20
@@ -88,7 +88,7 @@ dimension = 2
 lower_bounds = [-100, -100]
 upper_bounds = [100, 100]
 
-pso = PSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+pso = PSO(swarm_size, dimension, polynomial, lower_bounds, upper_bounds)
 
 pso.optimize(iterations=1000)
 ```
@@ -103,7 +103,7 @@ Making it easier for you, the example with ParallelPSO would be as follows:
 ```python
 from swarming.core.pso import ParallelPSO
 
-def function(x):
+def polynomial(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 swarm_size = 20
@@ -111,7 +111,7 @@ dimension = 2
 lower_bounds = [-100, -100]
 upper_bounds = [100, 100]
 
-pso = ParallelPSO(swarm_size, dimension, function, lower_bounds, upper_bounds)
+pso = ParallelPSO(swarm_size, dimension, polynomial, lower_bounds, upper_bounds)
 
 pso.optimize(iterations=1000)
 ```
@@ -154,7 +154,7 @@ from swarming.utils.argument_parser import parse_arguments
 
 from swarming.core.pso import PSO, ParallelPSO
 
-def function(x):
+def polynomial(x):
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 args = parse_arguments()
@@ -173,7 +173,7 @@ if not parallel:
 else:
     PSOClass = ParallelPSO
 
-pso = PSOClass(swarm_size, dimension, function, lower_bounds, upper_bounds)
+pso = PSOClass(swarm_size, dimension, polynomial, lower_bounds, upper_bounds)
 
 pso.optimize(iterations=iterations, executions=executions)
 ```
@@ -181,7 +181,7 @@ pso.optimize(iterations=iterations, executions=executions)
 ## Examples
 
 In the examples directory, there are currently two scripts:
-- math_function.py;
+- polynomial.py;
 - neural_net.py.
 
 You can pick any script to test. Moreover, you can change them as you want.
@@ -193,7 +193,7 @@ They use the parser, so you need to pass the required arguments.
 
 The first script can be executed as follows:
 ```bash
-python3 math_function.py --swarm-size 20 --iterations 1000
+python3 polynomial.py --swarm-size 20 --iterations 1000
 ```
 
 ## Installation
