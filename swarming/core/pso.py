@@ -43,7 +43,7 @@ class PSO:
         # Set function to be optimized
         self._function = function
 
-        logger.debug(f'Function = {self._function}')
+        logger.debug(f'Function = {self._function.__name__}')
 
         # Set search space boundaries
         self._lower_bounds = l_bounds
