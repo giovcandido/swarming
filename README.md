@@ -1,5 +1,10 @@
 # Swarming
 
+[![PyPI][pypi-badge]][pypi-link]
+[![PyPI - Downloads][install-badge]][install-link]
+[![PyPI - Status][status-badge]][status-link]
+[![PyPI - License][license-badge]][license-link]
+
 Particle Swarm Optimization algorithm with serial and distributed execution. 
 
 It's made with Python3 and tested on Linux.
@@ -81,3 +86,13 @@ __Bear in mind__ that distributed computing works better for long calculations.
 The idea of Particle Swarm Optimization can be found in [Kennedy's paper](https://ieeexplore.ieee.org/document/488968).
 
 It's worth mentioning that my colleague [gugarosa](https://github.com/gugarosa) made sure I was on the right path.
+
+
+[pypi-badge]: https://img.shields.io/pypi/v/swarming.svg
+[pypi-link]: https://pypi.org/project/swarming
+[install-badge]: https://img.shields.io/pypi/dm/swarming?label=pypi%20installs
+[install-link]: https://pypistats.org/packages/swarming
+[license-badge]: https://img.shields.io/pypi/l/swarming.svg
+[license-link]: https://pypi.python.org/pypi/swarming/
+[status-badge]: https://img.shields.io/pypi/status/swarming.svg
+[status-link]: https://pypi.python.org/pypi/swarming/
