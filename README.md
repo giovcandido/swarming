@@ -15,6 +15,7 @@ Optimize as much as you want with this easy-to-use library.
     - [Working](#working)
     - [Illustration](#illustration)
     - [Parser](#parser)
+    - [Output](#output)
 - [Examples](#examples)
 - [Installation](#installation)
 - [Acknowledgement](#acknowledgement)
@@ -176,6 +177,19 @@ else:
 pso = PSOClass(swarm_size, dimension, polynomial, lower_bounds, upper_bounds)
 
 pso.optimize(iterations=iterations, executions=executions)
+```
+
+### Output
+
+Every execution generates one unique __.log__ file that describes step-by-step what happens in the optimization task.
+
+Additionally, one unique __.npy__ is also saved. This file contains the best task position, that is the solution to the optimization problem.
+
+In order to load the solution, all you have to do is:
+```python3
+import numpy as np
+
+sol = np.load('file.npy')
 ```
 
 ## Examples
