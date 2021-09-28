@@ -2,6 +2,7 @@ from swarming.core.pso import PSO
 
 # Function to be optimized
 def polynomial(x):
+    # x^2 + (y^2/16 -5)^2 + 2x + 6
     return x[0] ** 2 + ((x[1] ** 2) / 16 - 5) ** 2 + 2 * x[0] + 6
 
 def main():
