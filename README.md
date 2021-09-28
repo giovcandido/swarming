@@ -1,4 +1,4 @@
-# Swarming
+# Swarming - PSO and ParallelPSO Python3 library
 
 [![PyPI][pypi-badge]][pypi-link]
 [![PyPI - Downloads][install-badge]][install-link]
