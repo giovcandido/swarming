@@ -6,7 +6,7 @@
 [![PyPI - License][license-badge]][license-link]
 
 <p align="center">
-    <img src="https://github.com/giovcandido/swarming/blob/master/swarming.gif?raw=true" alt="Swarming in action">
+    <img src="https://github.com/giovcandido/swarming/blob/master/demo.gif?raw=true" alt="Swarming in action">
 </p>
 
 Optimize as much as you want with this easy-to-use library.
