@@ -39,7 +39,7 @@ setup(
         'Operating System :: OS Independent',
         'Natural Language :: English',
         'Topic :: Software Development :: Libraries',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+        'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
     ]
 )
