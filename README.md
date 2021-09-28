@@ -182,6 +182,7 @@ pso.optimize(iterations=iterations, executions=executions)
 
 In the examples directory, there are currently two scripts:
 - polynomial.py;
+- exponential.py;
 - neural_net.py.
 
 You can pick any script to test. Moreover, you can change them as you want.
