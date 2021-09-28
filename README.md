@@ -189,11 +189,16 @@ You can pick any script to test. Moreover, you can change them as you want.
 In order to test Swarming for the first time, keep the scripts unchanged
 and execute them.
 
-They use the parser, so you need to pass the required arguments.
+The first script does not use the parser, while the latter does.
 
-The first script can be executed as follows:
+So, the first script can be executed as follows:
 ```bash
-python3 polynomial.py --swarm-size 20 --iterations 1000
+python3 polynomial.py
+```
+
+The second script can be executed this way:
+```bash
+python3 neural_net.py --swarm-size 10 --iterations 100
 ```
 
 ## Installation
