@@ -180,7 +180,7 @@ pso.optimize(iterations=iterations, executions=executions)
 
 ## Examples
 
-In the examples directory, there are currently two scripts:
+In the examples directory, there are currently three scripts:
 - polynomial.py;
 - exponential.py;
 - neural_net.py.
