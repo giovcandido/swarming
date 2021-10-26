@@ -219,7 +219,8 @@ class ParallelPSO(PSO):
         logger.debug(f'Threads = {num_cpus}')
 
         # Initialize ray instance
-        ray.init(num_cpus=num_cpus, logging_level=FATAL)
+        ray.init(num_cpus=num_cpus, logging_level=FATAL, 
+                 ignore_reinit_error=True)
 
         logger.info('Ray was initialized successfully')
 
