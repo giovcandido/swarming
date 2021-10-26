@@ -54,7 +54,7 @@ class PSO:
 
         logger.info('PSO instance was created successfully')
 
-    def optimize(self, iterations, executions=1):
+    def optimize(self, iterations, executions=1, output_file=''):
         logger.info(f'Task has {executions} executions')
         logger.info(f'With {iterations} iterations each execution')
 
@@ -102,8 +102,10 @@ class PSO:
                     f'{scores[best_score_index]}')
 
         # Save task best position
-        output_filename = 'task_best_position-' + strftime('%Y%m%d-%H%M%S')
-        np.save(output_filename, positions[best_score_index])
+        if not output_file:
+            output_file = 'task_best_position-' + strftime('%Y%m%d-%H%M%S')
+        
+        np.save(output_file, positions[best_score_index])
 
     def _execute(self, iterations):
         logger.info(f'Creating the search space '
